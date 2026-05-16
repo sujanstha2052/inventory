@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StockResource\Pages;
 use App\Models\Stock;
-use App\Models\StockMovement;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -100,28 +99,5 @@ class StockResource extends Resource
             'create' => Pages\CreateStock::route('/create'),
             'edit' => Pages\EditStock::route('/{record}/edit'),
         ];
-    }
-
-    protected function mutateFormDataBeforeCreate(array $data): array
-    {
-        $data['created_by'] = auth()->id();
-        $data['updated_by'] = auth()->id();
-
-        return $data;
-    }
-
-    protected function afterCreate(): void
-    {
-        $record = $this->record;
-        StockMovement::create([
-            'stock_id' => $record->id,
-            'product_variant_id' => $record->product_variant_id,
-            'warehouse_id' => $record->warehouse_id,
-            'type' => 'in',
-            'quantity' => $record->quantity,
-            'unit_cost' => $record->unit_cost,
-            'notes' => 'Manual stock addition',
-            'created_by' => auth()->id(),
-        ]);
     }
 }
