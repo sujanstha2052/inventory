@@ -16,7 +16,7 @@ class ProductVariant extends Model
         'product_id',
         'sku',
         'name',
-        'attributes',
+        'variant_attributes',
         'purchase_price',
         'selling_price',
         'barcode',
@@ -30,7 +30,7 @@ class ProductVariant extends Model
     ];
 
     protected $casts = [
-        'attributes' => 'array',
+        'variant_attributes' => 'array',
         'is_default' => 'boolean',
         'is_active' => 'boolean',
         'purchase_price' => 'decimal:2',
